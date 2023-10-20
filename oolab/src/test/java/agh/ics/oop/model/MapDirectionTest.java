@@ -1,12 +1,13 @@
-import agh.ics.oop.model.MapDirection;
+package agh.ics.oop.model;
 
-import agh.ics.oop.model.Vector2d;
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
-public class MapDirectionTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+class MapDirectionTest {
+
     @Test
-    public void MapDirectionTest_toString(){
+    void testToString() {
         MapDirection direction = MapDirection.NORTH;
         assertEquals(direction.toString(), "Północ");
 
@@ -21,9 +22,7 @@ public class MapDirectionTest {
     }
 
     @Test
-    public void MapDirectionTest_next(){
-        System.out.println("Test1");
-
+    void next() {
         MapDirection direction = MapDirection.NORTH;
         direction = direction.next();
         assertEquals(direction, MapDirection.EAST);
@@ -39,7 +38,7 @@ public class MapDirectionTest {
     }
 
     @Test
-    public void MapDirectionTest_previous(){
+    void previous() {
         MapDirection direction = MapDirection.NORTH;
         direction = direction.previous();
         assertEquals(direction, MapDirection.WEST);
@@ -55,7 +54,7 @@ public class MapDirectionTest {
     }
 
     @Test
-    public void MapDirectionTest_toUnitVector(){
+    void toUnitVector() {
         MapDirection direction = MapDirection.NORTH;
         assertEquals(direction.toUnitVector(), new Vector2d(0, 1));
 
