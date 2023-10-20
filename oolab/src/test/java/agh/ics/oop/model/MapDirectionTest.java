@@ -9,16 +9,16 @@ class MapDirectionTest {
     @Test
     void testToString() {
         MapDirection direction = MapDirection.NORTH;
-        assertEquals(direction.toString(), "Północ");
+        assertEquals(direction.toString(), "Polnoc");
 
         direction = MapDirection.SOUTH;
-        assertEquals(direction.toString(), "Południe");
+        assertEquals(direction.toString(), "Poludnie");
 
         direction = MapDirection.EAST;
-        assertEquals(direction.toString(), "Wschód");
+        assertEquals(direction.toString(), "Wschod");
 
         direction = MapDirection.WEST;
-        assertEquals(direction.toString(), "Zachód");
+        assertEquals(direction.toString(), "Zachod");
     }
 
     @Test

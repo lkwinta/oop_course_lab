@@ -1,7 +1,5 @@
 package agh.ics.oop.model;
 
-import java.util.Map;
-
 public enum MapDirection {
     NORTH,
     EAST,
@@ -11,10 +9,10 @@ public enum MapDirection {
     @Override
     public String toString(){
         return switch(this){
-            case NORTH -> "Północ";
-            case EAST -> "Wschód";
-            case SOUTH -> "Południe";
-            case WEST -> "Zachód";
+            case NORTH -> "Polnoc";
+            case EAST -> "Wschod";
+            case SOUTH -> "Poludnie";
+            case WEST -> "Zachod";
         };
     }
 
