@@ -32,6 +32,5 @@ test {
         showSummary true
         showStandardStreams false
     }
-
     useJUnitPlatform()
 }
