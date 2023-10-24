@@ -112,4 +112,13 @@ public class Vector2d {
         return false;
     }
 
+    @Override
+    public int hashCode(){
+        int hash = 17;
+
+        hash *= 23 * this.x;
+        hash *= 23 * this.y;
+
+        return hash;
+    }
 }
