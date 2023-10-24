@@ -1,7 +1,5 @@
 package agh.ics.oop.model;
 
-import java.util.Map;
-
 public enum MapDirection {
     NORTH,
     EAST,
@@ -19,21 +17,11 @@ public enum MapDirection {
     }
 
     public MapDirection next(){
-        return switch(this){
-            case NORTH -> EAST;
-            case EAST -> SOUTH;
-            case SOUTH -> WEST;
-            case WEST -> NORTH;
-        };
+        return values()[(this.ordinal() + 1) % values().length];
     }
 
     public MapDirection previous() {
-        return switch(this){
-            case NORTH -> WEST;
-            case EAST -> NORTH;
-            case SOUTH -> EAST;
-            case WEST -> SOUTH;
-        };
+        return values()[(this.ordinal() + values().length - 1) % values().length];
     }
 
     public Vector2d toUnitVector() {
