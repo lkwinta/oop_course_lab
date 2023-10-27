@@ -37,7 +37,7 @@ jobs:
     - name: Build with Gradle
       run: |
         cd oolab
-        ./gradlew build
+        ./gradlew assemble
 
   tests:
     runs-on: ubuntu-latest
