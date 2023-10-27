@@ -13,9 +13,9 @@ public class World {
         for(MoveDirection direction : directions) {
             System.out.printf("Zwierzak %s%n", switch(direction){
                 case FORWARD -> "idzie do przodu";
-                case BACKWARD -> "idzie do tyłu";
-                case LEFT -> "skręca w lewo";
-                case RIGHT -> "skręca w prawo";
+                case BACKWARD -> "idzie do tylu";
+                case LEFT -> "skreca w lewo";
+                case RIGHT -> "skreca w prawo";
             });
         }
     }
