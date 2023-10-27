@@ -30,6 +30,8 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: Make gradlew executable
+      run: chmod +x ./oolab/gradlew
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
     - name: Build with Gradle
@@ -44,5 +46,9 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: Make gradlew executable
+      run: chmod +x ./oolab/gradlew
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
     - name: Gradle run tests
       run: ./oolab/gradlew test
