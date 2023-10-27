@@ -37,7 +37,7 @@ jobs:
     - name: Build with Gradle
       run: |
         cd oolab
-        ./gradlew assemble --scan
+        ./gradlew assemble
 
   tests:
     runs-on: ubuntu-latest
@@ -55,4 +55,4 @@ jobs:
     - name: Gradle run tests
       run: |
         cd oolab
-        ./gradlew build --scan
+        ./gradlew build
