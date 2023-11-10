@@ -1,8 +1,6 @@
 package agh.ics.oop.model;
 
 public class Animal {
-    private final Vector2d MAP_RIGHT_TOP = new Vector2d(4, 4);
-    private final Vector2d MAP_LEFT_BOTTOM = new Vector2d(0, 0);
     private MapDirection orientation;
     private Vector2d position;
 
@@ -19,20 +17,20 @@ public class Animal {
         return this.position.equals(position);
     }
 
-    public void move(MoveDirection direction){
+    public void move(MoveDirection direction, IMoveValidator moveValidator){
         switch(direction) {
             case LEFT       -> orientation = orientation.previous();
             case RIGHT      -> orientation = orientation.next();
             case FORWARD   -> {
                 Vector2d newPosition = position.add(orientation.toUnitVector());
 
-                if(newPosition.precedes(MAP_RIGHT_TOP) && newPosition.follows(MAP_LEFT_BOTTOM))
+                if(moveValidator.canMoveTo(newPosition))
                     position = newPosition;
             }
             case BACKWARD   -> {
                 Vector2d newPosition = position.subtract(orientation.toUnitVector());
 
-                if(newPosition.precedes(MAP_RIGHT_TOP) && newPosition.follows(MAP_LEFT_BOTTOM))
+                if(moveValidator.canMoveTo(newPosition))
                     position = newPosition;
             }
         }
@@ -48,6 +46,11 @@ public class Animal {
 
     @Override
     public String toString(){
-        return "position: %s, orientation: %s".formatted(position.toString(), orientation.toString());
+        return switch(orientation){
+            case EAST -> ">";
+            case SOUTH -> "v";
+            case WEST -> "<";
+            case NORTH -> "^";
+        };
     }
 }
