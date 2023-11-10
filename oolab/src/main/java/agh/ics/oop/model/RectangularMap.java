@@ -5,7 +5,7 @@ import agh.ics.oop.model.util.MapVisualizer;
 import java.util.Map;
 import java.util.HashMap;
 
-public class RectangularMap implements IWorldMap, IMoveValidator {
+public class RectangularMap implements IWorldMap<Animal, Vector2d> {
     private final Map<Vector2d, Animal> animals;
     private final MapVisualizer mapVisualizer;
     private final Vector2d MAP_TOP_RIGHT;
@@ -25,28 +25,28 @@ public class RectangularMap implements IWorldMap, IMoveValidator {
     }
 
     @Override
-    public boolean place(Animal animal) {
-        if(isOccupied(animal.getPosition()))
+    public boolean place(Animal object) {
+        if(isOccupied(object.getPosition()))
             return false;
 
-        if(!canMoveTo(animal.getPosition()))
+        if(!canMoveTo(object.getPosition()))
             return false;
 
-        animals.put(animal.getPosition(), animal);
+        animals.put(object.getPosition(), object);
         return true;
     }
 
     @Override
-    public void move(Animal animal, MoveDirection direction) {
-        if (!animals.containsValue(animal))
+    public void move(Animal object, MoveDirection direction) {
+        if (!animals.containsValue(object))
             return;
 
-        Vector2d oldPosition = animal.getPosition();
-        animal.move(direction, this);
+        Vector2d oldPosition = object.getPosition();
+        object.move(direction, this);
 
-        if(!animal.getPosition().equals(oldPosition)){
+        if(!object.getPosition().equals(oldPosition)){
             animals.remove(oldPosition);
-            place(animal);
+            place(object);
         }
     }
 

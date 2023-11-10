@@ -12,17 +12,4 @@ public class World {
         Simulation simulation = new Simulation(positions, directions, new RectangularMap(5, 5));
         simulation.run();
     }
-
-    // Not necessary anymore
-    /*
-    public static void run(List<MoveDirection> directions){
-        for(MoveDirection direction : directions) {
-            System.out.printf("Zwierzak %s%n", switch(direction){
-                case FORWARD -> "idzie do przodu";
-                case BACKWARD -> "idzie do tylu";
-                case LEFT -> "skreca w lewo";
-                case RIGHT -> "skreca w prawo";
-            });
-        }
-    }*/
 }

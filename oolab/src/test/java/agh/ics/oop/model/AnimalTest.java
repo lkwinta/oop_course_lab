@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AnimalTest {
-    private static class MoveValidator implements IMoveValidator {
+    private static class MoveValidator implements IMoveValidator<Vector2d> {
         @Override
         public boolean canMoveTo(Vector2d position) {
             return position.follows(new Vector2d(0, 0)) && position.precedes(new Vector2d(4, 4));
