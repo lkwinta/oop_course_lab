@@ -3,14 +3,16 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class OptionParserTest {
+class OptionsParserTest {
 
     @Test
     void parseProperInput() {
         String[] args = {"l", "f", "b", "r", "l", "b", "r", "f"};
-        MoveDirection[] directions = {
+        List<MoveDirection> directions = List.of(
                 MoveDirection.LEFT,
                 MoveDirection.FORWARD,
                 MoveDirection.BACKWARD,
@@ -19,15 +21,15 @@ class OptionParserTest {
                 MoveDirection.BACKWARD,
                 MoveDirection.RIGHT,
                 MoveDirection.FORWARD
-        };
+        );
 
-        assertArrayEquals(directions, OptionParser.parse(args));
+        assertEquals(directions, OptionsParser.parse(args));
     }
 
     @Test
     void parseDistortedInput() {
         String[] args = {"l", "c", "f", "b", "g", "a", "r", "l", "b", "r", "v", "f"};
-        MoveDirection[] directions = {
+        List<MoveDirection> directions = List.of(
                 MoveDirection.LEFT,
                 MoveDirection.FORWARD,
                 MoveDirection.BACKWARD,
@@ -36,8 +38,8 @@ class OptionParserTest {
                 MoveDirection.BACKWARD,
                 MoveDirection.RIGHT,
                 MoveDirection.FORWARD
-        };
+        );
 
-        assertArrayEquals(directions, OptionParser.parse(args));
+        assertEquals(directions, OptionsParser.parse(args));
     }
 }

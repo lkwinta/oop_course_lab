@@ -2,9 +2,10 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.MoveDirection;
 
+import java.util.List;
 import java.util.ArrayList;
 
-public class OptionParser {
+public class OptionsParser {
 
     /**
      * Method parsing motion arguments into {@linkplain agh.ics.oop.model.MoveDirection MoveDirection} enum,
@@ -14,9 +15,9 @@ public class OptionParser {
      *
      * @return MoveDirection[] array of move directions in enum format
      */
-    public static MoveDirection[] parse(String[] args){
+    public static List<MoveDirection> parse(String[] args){
         /* Create list for parsed option*/
-        ArrayList<MoveDirection> directionsList = new ArrayList<>();
+        List<MoveDirection> directionsList = new ArrayList<>();
 
         /* Parse options ignoring invalid input*/
         for (String arg : args){
@@ -29,9 +30,6 @@ public class OptionParser {
             }
         }
 
-        /* Copy list into Java array */
-        MoveDirection[] directionsArray = new MoveDirection[directionsList.size()];
-        directionsArray = directionsList.toArray(directionsArray);
-        return directionsArray;
+        return directionsList;
     }
 }

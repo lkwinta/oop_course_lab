@@ -1,19 +1,22 @@
 package agh.ics.oop.model;
 
 public enum MapDirection {
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST;
+    NORTH("Polnoc", new Vector2d(0, 1)),
+    EAST("Wschod", new Vector2d(1, 0)),
+    SOUTH("Poludnie", new Vector2d(0, -1)),
+    WEST("Zachod", new Vector2d(-1, 0));
+
+    private final String stringRepresentation;
+    private final Vector2d vectorRepresentation;
+
+    MapDirection(String stringRepresentation, Vector2d vectorRepresentation){
+        this.stringRepresentation = stringRepresentation;
+        this.vectorRepresentation = vectorRepresentation;
+    }
 
     @Override
     public String toString(){
-        return switch(this){
-            case NORTH -> "Polnoc";
-            case EAST -> "Wschod";
-            case SOUTH -> "Poludnie";
-            case WEST -> "Zachod";
-        };
+        return stringRepresentation;
     }
 
     public MapDirection next(){
@@ -25,12 +28,7 @@ public enum MapDirection {
     }
 
     public Vector2d toUnitVector() {
-        return switch(this){
-            case NORTH -> new Vector2d(0, 1);
-            case EAST -> new Vector2d(1, 0);
-            case SOUTH -> new Vector2d(0, -1);
-            case WEST -> new Vector2d(-1, 0);
-        };
+        return vectorRepresentation;
     }
 
 }
