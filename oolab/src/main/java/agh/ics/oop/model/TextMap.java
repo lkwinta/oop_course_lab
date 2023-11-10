@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class TextMap implements IWorldMap<String, Integer> {
 
-    private record Pair<T1, T2>(T1 first, T2 second){}
+    public record Pair<T1, T2>(T1 first,  T2 second) {}
 
     private final List<Pair<String, MapDirection>> texts;
     private final Map<String, Integer> textsPositions;
@@ -32,6 +32,18 @@ public class TextMap implements IWorldMap<String, Integer> {
     @Override
     public void move(String object, MoveDirection direction) {
         Integer position = textsPositions.get(object);
+
+        if(direction == MoveDirection.LEFT){
+            texts.set(position, new Pair<>(object, texts.get(position).second.previous()));
+            return;
+        }
+
+        if(direction == MoveDirection.RIGHT){
+            texts.set(position, new Pair<>(object, texts.get(position).second.next()));
+            return;
+        }
+
+
         if(texts.get(position).second == MapDirection.NORTH ||
            texts.get(position).second == MapDirection.SOUTH)
             return;
@@ -42,6 +54,7 @@ public class TextMap implements IWorldMap<String, Integer> {
 
         if(canMoveTo(newPosition)){
             Collections.swap(texts, position, newPosition);
+            textsPositions.put(object, newPosition);
         }
     }
 
