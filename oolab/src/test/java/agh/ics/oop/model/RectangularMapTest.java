@@ -79,16 +79,14 @@ class RectangularMapTest {
     @Test
     void testToString() {
         String expectedOutput =
-                """
-                         y\\x  0 1 2 3 4\r
-                          5: -----------\r
-                          4: | | | | | |\r
-                          3: | | |^| | |\r
-                          2: | | | | | |\r
-                          1: | | | | | |\r
-                          0: | | | | | |\r
-                         -1: -----------\r
-                        """;
+                " y\\x  0 1 2 3 4" + System.lineSeparator() +
+                "  5: -----------" + System.lineSeparator() +
+                "  4: | | | | | |" + System.lineSeparator() +
+                "  3: | | |^| | |" + System.lineSeparator() +
+                "  2: | | | | | |" + System.lineSeparator() +
+                "  1: | | | | | |" + System.lineSeparator() +
+                "  0: | | | | | |" + System.lineSeparator() +
+                " -1: -----------" + System.lineSeparator();
 
         RectangularMap rectMap = new RectangularMap(5, 5);
         rectMap.place(new Animal(new Vector2d(2, 3)));
