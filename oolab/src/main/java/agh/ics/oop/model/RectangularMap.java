@@ -2,6 +2,8 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -58,6 +60,11 @@ public class RectangularMap implements IWorldMap<Animal, Vector2d> {
     @Override
     public Animal objectAt(Vector2d position) {
         return animals.get(position);
+    }
+
+    @Override
+    public List<Animal> getElements() {
+        return new ArrayList<>(animals.values());
     }
 
     @Override
