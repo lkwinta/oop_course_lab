@@ -39,8 +39,14 @@ class RectangularMapTest {
         RectangularMap rectMap = new RectangularMap(5, 5);
 
         Animal animal = new Animal(new Vector2d(3, 3));
+        Animal animal2 = new Animal(new Vector2d(3, 2));
 
         rectMap.place(animal);
+        rectMap.place(animal2);
+
+        rectMap.move(animal2, MoveDirection.FORWARD);
+        assertEquals(animal, rectMap.objectAt(new Vector2d(3, 3)));
+        assertEquals(animal2, rectMap.objectAt(new Vector2d(3, 2)));
 
         rectMap.move(animal, MoveDirection.FORWARD);
         assertEquals(animal, rectMap.objectAt(new Vector2d(3, 4)));
@@ -109,7 +115,7 @@ class RectangularMapTest {
         rectMap.place(animal3);
         rectMap.place(animal4);
 
-        List<Animal> elements = rectMap.getElements();
+        List<IWorldElement<Vector2d>> elements = rectMap.getElements();
 
         assertFalse(elements.contains(animal1));
         assertTrue(elements.contains(animal2));
