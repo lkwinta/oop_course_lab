@@ -16,7 +16,10 @@ public class GrassField extends AbstractWorldMap {
         super();
 
         grassMap = new HashMap<>(numberOfGrassFields);
+        createGrassFields(numberOfGrassFields);
+    }
 
+    private void createGrassFields(int numberOfGrassFields){
         RandomPositionGenerator positionGenerator = new RandomPositionGenerator(
                 (int)Math.sqrt(numberOfGrassFields*10),
                 (int)Math.sqrt(numberOfGrassFields*10),
