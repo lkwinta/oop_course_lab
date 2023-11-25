@@ -24,9 +24,9 @@ public class TextMap implements IWorldMap<String, Integer> {
     }
 
     @Override
-    public boolean place(String object) {
+    public void place(String object) throws PositionAlreadyOccupiedException {
         textsPositions.put(object, texts.size());
-        return texts.add(new Pair<>(object, MapDirection.NORTH));
+        texts.add(new Pair<>(object, MapDirection.NORTH));
     }
 
     @Override

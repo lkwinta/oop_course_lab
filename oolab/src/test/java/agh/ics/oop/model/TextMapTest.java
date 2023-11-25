@@ -10,9 +10,13 @@ class TextMapTest {
     void canMoveTo() {
         TextMap map = new TextMap();
 
-        map.place("Ala");
-        map.place("ma");
-        map.place("sowoniedzwiedzia");
+        try {
+            map.place("Ala");
+            map.place("ma");
+            map.place("sowoniedzwiedzia");
+        } catch (PositionAlreadyOccupiedException ex){
+            fail(ex.getMessage());
+        }
 
         assertFalse(map.canMoveTo(-1));
         assertTrue(map.canMoveTo(0));
@@ -27,9 +31,9 @@ class TextMapTest {
         String str2 = "ma";
         String str3 = "sowoniedzwiedzia";
 
-        map.place(str1);
-        map.place(str2);
-        map.place(str3);
+        assertDoesNotThrow(() -> map.place(str1));
+        assertDoesNotThrow(() -> map.place(str2));
+        assertDoesNotThrow(() -> map.place(str3));
 
         assertEquals(str1, map.objectAt(0));
         assertEquals(str2, map.objectAt(1));
@@ -44,9 +48,13 @@ class TextMapTest {
         String str2 = "ma";
         String str3 = "sowoniedzwiedzia";
 
-        map.place(str1);
-        map.place(str2);
-        map.place(str3);
+        try {
+            map.place(str1);
+            map.place(str2);
+            map.place(str3);
+        } catch (PositionAlreadyOccupiedException ex){
+            fail(ex.getMessage());
+        }
 
         map.move(str2, MoveDirection.FORWARD);
         assertEquals(str2, map.objectAt(1));
@@ -78,12 +86,16 @@ class TextMapTest {
     }
 
     @Test
-    void isOccupied() {
+    void isOccupied()  {
         TextMap map = new TextMap();
 
         String str1 = "Ala";
 
-        map.place(str1);
+        try {
+            map.place(str1);
+        } catch (PositionAlreadyOccupiedException ex){
+            fail(ex.getMessage());
+        }
 
         assertTrue(map.isOccupied(0));
         assertFalse(map.isOccupied(1));
@@ -96,7 +108,11 @@ class TextMapTest {
 
         String str1 = "Ala";
 
-        map.place(str1);
+        try {
+            map.place(str1);
+        } catch(PositionAlreadyOccupiedException ex){
+            fail(ex.getMessage());
+        }
 
         assertEquals(str1, map.objectAt(0));
         assertNull(map.objectAt(1));

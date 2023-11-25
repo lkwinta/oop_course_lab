@@ -22,21 +22,16 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
     }
 
     @Override
-    public boolean place(IWorldElement<Vector2d> object) {
+    public void place(IWorldElement<Vector2d> object) throws PositionAlreadyOccupiedException {
         if(!canMoveTo(object.getPosition()))
-            return false;
+            throw new PositionAlreadyOccupiedException(object.getPosition());
 
-        if(!(object instanceof Animal animal)){
-           return false;
-        }
-
-        animalsMap.put(animal.getPosition(), animal);
-
-        return true;
+        if(object instanceof Animal animal)
+            animalsMap.put(animal.getPosition(), animal);
     }
 
     @Override
-    public void move(IWorldElement<Vector2d> object, MoveDirection direction) {
+    public void move(IWorldElement<Vector2d> object, MoveDirection direction) throws IllegalArgumentException {
         if(!(object instanceof Animal animal))
             throw new IllegalArgumentException("You can't move object that is not an Animal'");
 
@@ -44,8 +39,16 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
         animal.move(direction, this);
 
         if(!animal.getPosition().equals(oldPosition)){
-            animalsMap.remove(oldPosition);
-            place(animal);
+            try {
+                place(animal);
+                animalsMap.remove(oldPosition);
+            } catch (PositionAlreadyOccupiedException ex) {
+                /*
+                * Handling error just in case, move validator should be capable of handling this situation,
+                * so it should never happen
+                * */
+                System.out.println("Error moving animal to desired position, it is already occupied");
+            }
         }
     }
 

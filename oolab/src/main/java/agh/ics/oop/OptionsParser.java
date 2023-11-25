@@ -3,7 +3,9 @@ package agh.ics.oop;
 import agh.ics.oop.model.MoveDirection;
 
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Objects;
+
+import static java.util.Arrays.stream;
 
 public class OptionsParser {
 
@@ -16,20 +18,19 @@ public class OptionsParser {
      * @return MoveDirection[] array of move directions in enum format
      */
     public static List<MoveDirection> parse(String[] args){
-        /* Create list for parsed option*/
-        List<MoveDirection> directionsList = new ArrayList<>();
+        return stream(args)
+                .map(OptionsParser::mapArgToDirection)
+                .filter(Objects::nonNull)
+                .toList();
+    }
 
-        /* Parse options ignoring invalid input*/
-        for (String arg : args){
-            switch(arg) {
-                case "f" -> directionsList.add(MoveDirection.FORWARD);
-                case "b" -> directionsList.add(MoveDirection.BACKWARD);
-                case "l" -> directionsList.add(MoveDirection.LEFT);
-                case "r" -> directionsList.add(MoveDirection.RIGHT);
-                // no default statement -> ignore invalid input
-            }
-        }
-
-        return directionsList;
+    private static MoveDirection mapArgToDirection(String arg) {
+        return switch(arg) {
+            case "f" -> MoveDirection.FORWARD;
+            case "b" -> MoveDirection.BACKWARD;
+            case "l" -> MoveDirection.LEFT;
+            case "r" -> MoveDirection.RIGHT;
+            default -> throw new IllegalArgumentException(arg + " is not legal move specification");
+        };
     }
 }

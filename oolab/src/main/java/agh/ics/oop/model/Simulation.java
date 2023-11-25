@@ -21,8 +21,13 @@ public class Simulation {
         for(Vector2d position : startingPositions) {
             Animal animal = new Animal(position);
 
-            if(worldMap.place(animal))
+            try {
+                worldMap.place(animal);
                 animalsList.add(animal);
+            } catch (PositionAlreadyOccupiedException ex){
+                System.out.println("Tried to place animal on occupied position");
+            }
+
         }
     }
 
@@ -30,9 +35,6 @@ public class Simulation {
         int animalIndex = 0;
 
         for(MoveDirection direction : moveDirections){
-            //animalsList.get(animalIndex).move(direction);
-            //System.out.printf("Zwierze %d : %s \n", animalIndex, animalsList.get(animalIndex));
-
             worldMap.move(animalsList.get(animalIndex), direction);
             System.out.println(worldMap);
 

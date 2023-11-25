@@ -14,9 +14,8 @@ public interface IWorldMap<T, P> extends IMoveValidator<P> {
      * Place a T type object on the map.
      *
      * @param object The animal to place on the map.
-     * @return True if the animal was placed. The animal cannot be placed if the move is not valid.
      */
-    boolean place(T object);
+    void place(T object) throws PositionAlreadyOccupiedException;
 
     /**
      * Moves an T object (if it is present on the map) according to specified direction.

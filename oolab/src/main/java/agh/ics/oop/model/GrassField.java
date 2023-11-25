@@ -31,17 +31,12 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public boolean place(IWorldElement<Vector2d> object) {
-        if(super.place(object))
-            return true;
+    public void place(IWorldElement<Vector2d> object) throws PositionAlreadyOccupiedException {
+        super.place(object);
 
         if (object instanceof Grass grass) {
             grassMap.put(grass.getPosition(), grass);
-        } else {
-            return false;
         }
-
-        return true;
     }
 
     @Override
