@@ -26,10 +26,13 @@ class RectangularMapTest {
     void place() {
         RectangularMap rectMap = new RectangularMap(5, 5);
 
-        assertFalse(rectMap.place(new Animal(new Vector2d(5,5))));
+        assertThrows(PositionAlreadyOccupiedException.class,
+                () -> rectMap.place(new Animal(new Vector2d(5,5))));
 
-        assertTrue(rectMap.place(new Animal(new Vector2d(3, 3))));
-        assertFalse(rectMap.place(new Animal(new Vector2d(3,3))));
+        assertDoesNotThrow(
+                () -> rectMap.place(new Animal(new Vector2d(3, 3))));
+        assertThrows(PositionAlreadyOccupiedException.class,
+                () -> rectMap.place(new Animal(new Vector2d(3,3))));
 
         assertTrue(rectMap.isOccupied(new Vector2d(3, 3)));
     }
@@ -41,8 +44,12 @@ class RectangularMapTest {
         Animal animal = new Animal(new Vector2d(3, 3));
         Animal animal2 = new Animal(new Vector2d(3, 2));
 
-        rectMap.place(animal);
-        rectMap.place(animal2);
+        try {
+            rectMap.place(animal);
+            rectMap.place(animal2);
+        } catch(PositionAlreadyOccupiedException ex) {
+            fail(ex.getMessage());
+        }
 
         rectMap.move(animal2, MoveDirection.FORWARD);
         assertEquals(animal, rectMap.objectAt(new Vector2d(3, 3)));
@@ -61,8 +68,11 @@ class RectangularMapTest {
     void isOccupied() {
         RectangularMap rectMap = new RectangularMap(5, 5);
 
-        rectMap.place(new Animal(new Vector2d(5,5)));
-        rectMap.place(new Animal(new Vector2d(3, 3)));
+        try {
+            rectMap.place(new Animal(new Vector2d(3, 3)));
+        } catch (PositionAlreadyOccupiedException ex) {
+            fail(ex.getMessage());
+        }
 
         assertTrue(rectMap.isOccupied(new Vector2d(3, 3)));
         assertFalse(rectMap.isOccupied(new Vector2d(5, 5)));
@@ -72,11 +82,13 @@ class RectangularMapTest {
     void objectAt() {
         RectangularMap rectMap = new RectangularMap(5, 5);
 
-        Animal animal1 = new Animal(new Vector2d(5,5));
         Animal animal2 = new Animal(new Vector2d(3, 3));
 
-        rectMap.place(animal1);
-        rectMap.place(animal2);
+        try {
+            rectMap.place(animal2);
+        } catch (PositionAlreadyOccupiedException ex) {
+            fail(ex.getMessage());
+        }
 
         assertNull(rectMap.objectAt(new Vector2d(5,5)));
 
@@ -97,29 +109,35 @@ class RectangularMapTest {
                 " -1: -----------" + System.lineSeparator();
 
         RectangularMap rectMap = new RectangularMap(5, 5);
-        rectMap.place(new Animal(new Vector2d(2, 3)));
+
+        try {
+            rectMap.place(new Animal(new Vector2d(2, 3)));
+        } catch(PositionAlreadyOccupiedException ex){
+            fail(ex.getMessage());
+        }
 
         assertEquals(expectedOutput, rectMap.toString());
     }
 
     @Test
-    void testGetElements(){
+    void testGetElements() {
         RectangularMap rectMap = new RectangularMap(5, 5);
-        Animal animal1 = new Animal(new Vector2d(5,5));
+
         Animal animal2 = new Animal(new Vector2d(3, 3));
         Animal animal3 = new Animal(new Vector2d(4,4));
-        Animal animal4 = new Animal(new Vector2d(3, 3));
 
-        rectMap.place(animal1);
-        rectMap.place(animal2);
-        rectMap.place(animal3);
-        rectMap.place(animal4);
+        try {
+            rectMap.place(animal2);
+            rectMap.place(animal3);
+        } catch(PositionAlreadyOccupiedException ex) {
+            fail(ex.getMessage());
+        }
 
         List<IWorldElement<Vector2d>> elements = rectMap.getElements();
 
-        assertFalse(elements.contains(animal1));
         assertTrue(elements.contains(animal2));
         assertTrue(elements.contains(animal3));
-        assertFalse(elements.contains(animal4));
+
+        assertEquals(2, elements.size());
     }
 }

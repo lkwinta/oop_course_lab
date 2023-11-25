@@ -1,5 +1,6 @@
 package agh.ics.oop.model.util;
 
+import agh.ics.oop.model.IWorldElement;
 import agh.ics.oop.model.IWorldMap;
 import agh.ics.oop.model.Vector2d;
 
@@ -13,14 +14,14 @@ public class MapVisualizer {
     private static final String EMPTY_CELL = " ";
     private static final String FRAME_SEGMENT = "-";
     private static final String CELL_SEGMENT = "|";
-    private final IWorldMap map;
+    private final IWorldMap<IWorldElement<Vector2d>, Vector2d> map;
 
     /**
      * Initializes the MapVisualizer with an instance of map to visualize.
      *
-     * @param map
+     * @param map IWorld map object that will be drowned on the screen
      */
-    public MapVisualizer(IWorldMap map) {
+    public MapVisualizer(IWorldMap<IWorldElement<Vector2d>, Vector2d> map) {
         this.map = map;
     }
 

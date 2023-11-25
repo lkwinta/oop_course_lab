@@ -23,23 +23,14 @@ class OptionsParserTest {
                 MoveDirection.FORWARD
         );
 
+        assertDoesNotThrow(() -> OptionsParser.parse(args));
         assertEquals(directions, OptionsParser.parse(args));
     }
 
     @Test
     void parseDistortedInput() {
         String[] args = {"l", "c", "f", "b", "g", "a", "r", "l", "b", "r", "v", "f"};
-        List<MoveDirection> directions = List.of(
-                MoveDirection.LEFT,
-                MoveDirection.FORWARD,
-                MoveDirection.BACKWARD,
-                MoveDirection.RIGHT,
-                MoveDirection.LEFT,
-                MoveDirection.BACKWARD,
-                MoveDirection.RIGHT,
-                MoveDirection.FORWARD
-        );
 
-        assertEquals(directions, OptionsParser.parse(args));
+        assertThrows(IllegalArgumentException.class, () -> OptionsParser.parse(args));
     }
 }
