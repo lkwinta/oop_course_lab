@@ -36,8 +36,6 @@ public class Simulation {
 
         for(MoveDirection direction : moveDirections){
             worldMap.move(animalsList.get(animalIndex), direction);
-            System.out.println(worldMap);
-
             animalIndex = ++animalIndex % animalsList.size();
         }
     }

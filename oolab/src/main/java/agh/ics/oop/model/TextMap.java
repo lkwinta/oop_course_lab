@@ -75,4 +75,9 @@ public class TextMap implements IWorldMap<String, Integer> {
     public List<String> getElements() {
         return new ArrayList<>(textsPositions.keySet());
     }
+
+    @Override
+    public Boundry getCurrentBounds() {
+        return new Boundry(new Vector2d(0, 0), new Vector2d(texts.size(), 0));
+    }
 }

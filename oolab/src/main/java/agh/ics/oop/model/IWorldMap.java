@@ -47,4 +47,11 @@ public interface IWorldMap<T, P> extends IMoveValidator<P> {
      * @return copy of the list containing all elements on the map
      */
     List<T> getElements();
+
+    /**
+     * Return current top right and bottom left corner of the map
+     *
+     * @return container for top right and bottom left vector
+     */
+    Boundry getCurrentBounds();
 }
