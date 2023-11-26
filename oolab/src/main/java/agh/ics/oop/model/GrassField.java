@@ -36,6 +36,7 @@ public class GrassField extends AbstractWorldMap {
 
         if (object instanceof Grass grass) {
             grassMap.put(grass.getPosition(), grass);
+            super.mapChanged("Grass placed at: " + grass.getPosition());
         }
     }
 
@@ -57,7 +58,7 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public String toString() {
+    public Boundry getCurrentBounds() {
         Vector2d leftBottom = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Vector2d rightTop = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
@@ -67,6 +68,6 @@ public class GrassField extends AbstractWorldMap {
             leftBottom = leftBottom.lowerLeft(vec);
         }
 
-        return mapVisualizer.draw(leftBottom, new Vector2d(rightTop.getX(), rightTop.getY()));
+        return new Boundry(leftBottom, rightTop);
     }
 }

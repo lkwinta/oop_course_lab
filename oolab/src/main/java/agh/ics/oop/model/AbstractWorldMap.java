@@ -2,18 +2,28 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.MapVisualizer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector2d>, Vector2d> {
     protected final MapVisualizer mapVisualizer;
     protected final Map<Vector2d, Animal> animalsMap;
+    private final List<IMapChangeListener> listeners;
 
     protected AbstractWorldMap(){
         animalsMap = new HashMap<>();
         mapVisualizer = new MapVisualizer(this);
+        listeners = new ArrayList<>();
+    }
+
+    public void addListener(IMapChangeListener listener){
+        this.listeners.add(listener);
+    }
+    public void removeListener(IMapChangeListener listener) {
+        this.listeners.remove(listener);
+    }
+
+    protected void mapChanged(String message){
+        listeners.forEach((listener) -> listener.mapChanged(this, message));
     }
 
     @Override
@@ -26,8 +36,10 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
         if(!canMoveTo(object.getPosition()))
             throw new PositionAlreadyOccupiedException(object.getPosition());
 
-        if(object instanceof Animal animal)
+        if(object instanceof Animal animal) {
             animalsMap.put(animal.getPosition(), animal);
+            mapChanged("Animal placed at: " + animal.getPosition());
+        }
     }
 
     @Override
@@ -42,6 +54,7 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
             try {
                 place(animal);
                 animalsMap.remove(oldPosition);
+                //mapChanged("Animal moved to: " + animal.getPosition()); // <-- already calling update from place method
             } catch (PositionAlreadyOccupiedException ex) {
                 /*
                 * Handling error just in case, move validator should be capable of handling this situation,
@@ -65,5 +78,11 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
     @Override
     public List<IWorldElement<Vector2d>> getElements() {
         return new ArrayList<>(animalsMap.values());
+    }
+
+    @Override
+    public String toString() {
+        Boundry currentBounds = getCurrentBounds();
+        return mapVisualizer.draw(currentBounds.bottomLeft(), currentBounds.topRight());
     }
 }
