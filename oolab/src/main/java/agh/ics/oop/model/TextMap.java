@@ -70,4 +70,9 @@ public class TextMap implements IWorldMap<String, Integer> {
 
         return texts.get(position).first;
     }
+
+    @Override
+    public List<String> getElements() {
+        return new ArrayList<>(textsPositions.keySet());
+    }
 }

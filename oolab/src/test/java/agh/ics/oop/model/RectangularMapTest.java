@@ -2,6 +2,8 @@ package agh.ics.oop.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RectangularMapTest {
@@ -37,8 +39,14 @@ class RectangularMapTest {
         RectangularMap rectMap = new RectangularMap(5, 5);
 
         Animal animal = new Animal(new Vector2d(3, 3));
+        Animal animal2 = new Animal(new Vector2d(3, 2));
 
         rectMap.place(animal);
+        rectMap.place(animal2);
+
+        rectMap.move(animal2, MoveDirection.FORWARD);
+        assertEquals(animal, rectMap.objectAt(new Vector2d(3, 3)));
+        assertEquals(animal2, rectMap.objectAt(new Vector2d(3, 2)));
 
         rectMap.move(animal, MoveDirection.FORWARD);
         assertEquals(animal, rectMap.objectAt(new Vector2d(3, 4)));
@@ -92,5 +100,26 @@ class RectangularMapTest {
         rectMap.place(new Animal(new Vector2d(2, 3)));
 
         assertEquals(expectedOutput, rectMap.toString());
+    }
+
+    @Test
+    void testGetElements(){
+        RectangularMap rectMap = new RectangularMap(5, 5);
+        Animal animal1 = new Animal(new Vector2d(5,5));
+        Animal animal2 = new Animal(new Vector2d(3, 3));
+        Animal animal3 = new Animal(new Vector2d(4,4));
+        Animal animal4 = new Animal(new Vector2d(3, 3));
+
+        rectMap.place(animal1);
+        rectMap.place(animal2);
+        rectMap.place(animal3);
+        rectMap.place(animal4);
+
+        List<IWorldElement<Vector2d>> elements = rectMap.getElements();
+
+        assertFalse(elements.contains(animal1));
+        assertTrue(elements.contains(animal2));
+        assertTrue(elements.contains(animal3));
+        assertFalse(elements.contains(animal4));
     }
 }
