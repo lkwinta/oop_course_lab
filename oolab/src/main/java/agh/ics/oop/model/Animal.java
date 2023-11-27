@@ -3,7 +3,7 @@ package agh.ics.oop.model;
 /**
  * Class representing Animal object that will be placed on WorldMap
  * */
-public class Animal implements IWorldElement<Vector2d> {
+public class Animal {
     private MapDirection orientation;
     private Vector2d position;
 
