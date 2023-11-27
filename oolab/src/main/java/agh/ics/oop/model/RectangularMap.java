@@ -1,23 +1,21 @@
 package agh.ics.oop.model;
 
 public class RectangularMap extends AbstractWorldMap {
-    private final Vector2d MAP_TOP_RIGHT;
-    private final Vector2d MAP_BOTTOM_LEFT;
+    private final Vector2d mapTopRight;
+    private final Vector2d mapBottomLeft;
 
     public RectangularMap(int width, int height){
-        super();
-
-        MAP_TOP_RIGHT = new Vector2d(width - 1, height - 1);
-        MAP_BOTTOM_LEFT = new Vector2d(0, 0);
+        mapTopRight = new Vector2d(width - 1, height - 1);
+        mapBottomLeft = new Vector2d(0, 0);
     }
 
     @Override
     public boolean canMoveTo(Vector2d position) {
-        return super.canMoveTo(position) && position.follows(MAP_BOTTOM_LEFT) && position.precedes(MAP_TOP_RIGHT);
+        return super.canMoveTo(position) && position.follows(mapBottomLeft) && position.precedes(mapTopRight);
     }
 
     @Override
     public Boundry getCurrentBounds() {
-        return new Boundry(MAP_BOTTOM_LEFT, MAP_TOP_RIGHT);
+        return new Boundry(mapBottomLeft, mapTopRight);
     }
 }
