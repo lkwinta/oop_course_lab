@@ -56,7 +56,7 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public Boundry getCurrentBounds() {
+    public Boundary getCurrentBounds() {
         Vector2d leftBottom = new Vector2d(Integer.MAX_VALUE, Integer.MAX_VALUE);
         Vector2d rightTop = new Vector2d(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
@@ -66,6 +66,6 @@ public class GrassField extends AbstractWorldMap {
             leftBottom = leftBottom.lowerLeft(vec);
         }
 
-        return new Boundry(leftBottom, rightTop);
+        return new Boundary(leftBottom, rightTop);
     }
 }
