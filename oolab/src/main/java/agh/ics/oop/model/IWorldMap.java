@@ -53,5 +53,5 @@ public interface IWorldMap<T, P> extends IMoveValidator<P> {
      *
      * @return container for top right and bottom left vector
      */
-    Boundry getCurrentBounds();
+    Boundary getCurrentBounds();
 }

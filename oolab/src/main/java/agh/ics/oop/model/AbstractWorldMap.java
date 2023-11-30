@@ -48,21 +48,17 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
             throw new IllegalArgumentException("You can't move object that is not an Animal'");
 
         Vector2d oldPosition = animal.getPosition();
+        MapDirection oldOrientation = animal.getOrientation();
+
         animal.move(direction, this);
 
         if(!animal.getPosition().equals(oldPosition)){
-            try {
-                place(animal);
-                animalsMap.remove(oldPosition);
-                //mapChanged("Animal moved to: " + animal.getPosition()); // <-- already calling update from place method
-            } catch (PositionAlreadyOccupiedException ex) {
-                /*
-                * Handling error just in case, move validator should be capable of handling this situation,
-                * so it should never happen
-                * */
-                System.out.println("Error moving animal to desired position, it is already occupied");
-            }
+            animalsMap.remove(oldPosition);
+            animalsMap.put(animal.getPosition(), animal);
+            mapChanged("Animal moved to: " + animal.getPosition());
         }
+        if(animal.getOrientation().equals(oldOrientation))
+            mapChanged("Animal changed orientation to " + animal.getOrientation());
     }
 
     @Override
@@ -82,7 +78,7 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
 
     @Override
     public String toString() {
-        Boundry currentBounds = getCurrentBounds();
+        Boundary currentBounds = getCurrentBounds();
         return mapVisualizer.draw(currentBounds.bottomLeft(), currentBounds.topRight());
     }
 }
