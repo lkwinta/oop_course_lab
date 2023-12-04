@@ -30,9 +30,11 @@ public class SimulationEngine {
             thread.join();
         }
 
-        simulationExecutor.shutdown();
-        if(simulationExecutor != null && !simulationExecutor.awaitTermination(10,TimeUnit.SECONDS)){
-            simulationExecutor.shutdownNow();
+        if(simulationExecutor != null) {
+            simulationExecutor.shutdown();
+            if (!simulationExecutor.awaitTermination(10, TimeUnit.SECONDS)) {
+                simulationExecutor.shutdownNow();
+            }
         }
     }
 

@@ -26,14 +26,21 @@ public class World {
                             new Simulation(positions, OptionsParser.parse("f l f r f r f l b l".split(" ")), map1),
                             new Simulation(positions, OptionsParser.parse("f l f r f r f l b l".split(" ")), map2)
                     );*/
+
             List<Simulation> simulations = new ArrayList<>();
-            for (int i = 0; i < 1000; i++){
+            for (int i = 0; i < 100000; i++){
                 RectangularMap map1 = new RectangularMap(5, 5);
-                map1.addListener(mapDisplay);
+                //map1.addListener(mapDisplay);
                 simulations.add(new Simulation(positions,OptionsParser.parse("f l f r f r f l b l".split(" ")), map1));
             }
 
             SimulationEngine engine = new SimulationEngine(simulations);
+
+            /*
+             * Using thread pool is better than using low-level threads because spawning a lot of threads is heavy task
+             * and still they can't all run at the same time, so queuing tasks into thread pool is faster when creating
+             * multiple small tasks than creating bare threads
+            */
             engine.runAsyncInThreadPool();
             engine.awaitSimulationsEnd();
 
