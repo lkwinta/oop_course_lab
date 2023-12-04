@@ -8,7 +8,7 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
     protected final MapVisualizer mapVisualizer;
     protected final Map<Vector2d, Animal> animalsMap;
     private final List<IMapChangeListener> listeners;
-    protected UUID mapId;
+    private final UUID mapId;
 
     protected AbstractWorldMap(){
         animalsMap = new HashMap<>();
@@ -63,7 +63,7 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
         else if(animal.getOrientation().equals(oldOrientation))
             mapChanged("Animal at: %s changed orientation to: %s".formatted(oldPosition, animal.getOrientation()));
         else
-            mapChanged("Cannot move animal at: " + animal.getPosition());
+            mapChanged("Cannot move animal at: %s with direction: %s".formatted(animal.getPosition(), direction));
     }
 
     @Override
