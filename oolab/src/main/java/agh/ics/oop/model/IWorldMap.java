@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The interface responsible for interacting with the map of the world.
@@ -54,4 +55,10 @@ public interface IWorldMap<T, P> extends IMoveValidator<P> {
      * @return container for top right and bottom left vector
      */
     Boundary getCurrentBounds();
+
+    /**
+     *
+     * @return return ID of the map
+     */
+    UUID getId();
 }

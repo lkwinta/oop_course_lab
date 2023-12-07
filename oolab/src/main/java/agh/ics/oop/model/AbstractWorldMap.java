@@ -8,11 +8,14 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
     protected final MapVisualizer mapVisualizer;
     protected final Map<Vector2d, Animal> animalsMap;
     private final List<IMapChangeListener> listeners;
+    private final UUID mapId;
 
     protected AbstractWorldMap(){
         animalsMap = new HashMap<>();
         mapVisualizer = new MapVisualizer(this);
         listeners = new ArrayList<>();
+
+        mapId = UUID.randomUUID();
     }
 
     public void addListener(IMapChangeListener listener){
@@ -55,10 +58,12 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
         if(!animal.getPosition().equals(oldPosition)){
             animalsMap.remove(oldPosition);
             animalsMap.put(animal.getPosition(), animal);
-            mapChanged("Animal moved to: " + animal.getPosition());
+            mapChanged("Animal at %s moved to: %s ".formatted(oldPosition,animal.getPosition()));
         }
-        if(animal.getOrientation().equals(oldOrientation))
-            mapChanged("Animal changed orientation to " + animal.getOrientation());
+        else if(animal.getOrientation().equals(oldOrientation))
+            mapChanged("Animal at: %s changed orientation to: %s".formatted(oldPosition, animal.getOrientation()));
+        else
+            mapChanged("Cannot move animal at: %s with direction: %s".formatted(animal.getPosition(), direction));
     }
 
     @Override
@@ -80,5 +85,10 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
     public String toString() {
         Boundary currentBounds = getCurrentBounds();
         return mapVisualizer.draw(currentBounds.bottomLeft(), currentBounds.topRight());
+    }
+
+    @Override
+    public UUID getId() {
+        return mapId;
     }
 }

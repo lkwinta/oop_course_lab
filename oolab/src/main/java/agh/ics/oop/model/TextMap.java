@@ -1,21 +1,18 @@
 package agh.ics.oop.model;
 
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public class TextMap implements IWorldMap<String, Integer> {
-
     public record Pair<T1, T2>(T1 first,  T2 second) {}
-
     private final List<Pair<String, MapDirection>> texts;
     private final Map<String, Integer> textsPositions;
+    private final UUID mapId;
 
     TextMap(){
         texts = new ArrayList<>();
         textsPositions = new HashMap<>();
+
+        mapId = UUID.randomUUID();
     }
 
     @Override
@@ -79,5 +76,10 @@ public class TextMap implements IWorldMap<String, Integer> {
     @Override
     public Boundary getCurrentBounds() {
         return new Boundary(new Vector2d(0, 0), new Vector2d(texts.size(), 0));
+    }
+
+    @Override
+    public UUID getId() {
+        return mapId;
     }
 }

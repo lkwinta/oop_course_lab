@@ -3,7 +3,7 @@ package agh.ics.oop.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Simulation {
+public class Simulation implements Runnable {
     /** using array list because we iterate over the animals list
      * so continuous memory gives us extra performance compared to
      * LinkedList, also we are not adding more elements at runtime,
