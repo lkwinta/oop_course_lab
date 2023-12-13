@@ -100,7 +100,7 @@ public class SimulationPresenter {
     private void onSimulationStartClicked() {
         List<Vector2d> positions = List.of(
                 new Vector2d(0,0),
-                new Vector2d(2,2)
+                new Vector2d(5,5)
         );
 
         try {

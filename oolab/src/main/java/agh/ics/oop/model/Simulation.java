@@ -41,7 +41,7 @@ public class Simulation implements Runnable {
             for (MoveDirection direction : moveDirections) {
                 worldMap.move(animalsList.get(animalIndex), direction);
                 animalIndex = ++animalIndex % animalsList.size();
-                Thread.sleep(500);
+                Thread.sleep(1000);
             }
         } catch(InterruptedException ex){
             System.out.println("Simulation crashed because simulation thread got interrupted!");
