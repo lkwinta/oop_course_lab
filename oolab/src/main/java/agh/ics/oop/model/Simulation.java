@@ -31,12 +31,20 @@ public class Simulation implements Runnable {
         }
     }
 
-    public void run(){
+    @Override
+    public void run() {
         int animalIndex = 0;
-
-        for(MoveDirection direction : moveDirections){
-            worldMap.move(animalsList.get(animalIndex), direction);
-            animalIndex = ++animalIndex % animalsList.size();
+        /*
+        * Handling exception thrown by Thread.sleep(), can't throw exception further because run is overridden function
+        * */
+        try {
+            for (MoveDirection direction : moveDirections) {
+                worldMap.move(animalsList.get(animalIndex), direction);
+                animalIndex = ++animalIndex % animalsList.size();
+                Thread.sleep(500);
+            }
+        } catch(InterruptedException ex){
+            System.out.println("Simulation crashed because simulation thread got interrupted!");
         }
     }
 
