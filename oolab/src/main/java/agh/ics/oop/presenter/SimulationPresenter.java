@@ -18,6 +18,9 @@ public class SimulationPresenter {
     private final static int CELL_WIDTH = 40;
     private final static int CELL_HEIGHT = 40;
 
+    private final Vector2d xAxisMask = new Vector2d(1, 0);
+    private final Vector2d yAxisMask = new Vector2d(0, 1);
+
     private IWorldMap<IWorldElement<Vector2d>, Vector2d> worldMap;
 
     @FXML
@@ -38,33 +41,8 @@ public class SimulationPresenter {
         int width = currentBounds.topRight().getX() - currentBounds.bottomLeft().getX() + 1;
         int height = currentBounds.topRight().getY() - currentBounds.bottomLeft().getY() + 1;
 
-        while(mapGridPane.getColumnConstraints().size() <= width){
-            mapGridPane.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
-        }
-
-        while(mapGridPane.getRowConstraints().size() <= height){
-            mapGridPane.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
-        }
-
-        Label yx = new Label("y/x");
-        GridPane.setHalignment(yx, HPos.CENTER);
-        mapGridPane.add(yx, 0, 0);
-
-        int x = currentBounds.bottomLeft().getX();
-        for (int i = 1; i <= width; i++){
-            Label x_pos = new Label(String.valueOf(x));
-            GridPane.setHalignment(x_pos, HPos.CENTER);
-            mapGridPane.add(x_pos, i, 0);
-            x++;
-        }
-
-        int y = currentBounds.topRight().getY();
-        for (int i = 1; i <= height; i++){
-            Label y_pos = new Label(String.valueOf(y));
-            GridPane.setHalignment(y_pos, HPos.CENTER);
-            mapGridPane.add(y_pos, 0, i);
-            y--;
-        }
+        addConstraints(width, height);
+        createAxes(width, height, currentBounds);
 
         for(IWorldElement<Vector2d> element : worldMap.getElements()){
             Label elementLabel = new Label(element.toString());
@@ -73,9 +51,35 @@ public class SimulationPresenter {
                     element.getPosition().getX() + 1 - currentBounds.bottomLeft().getX(),
                     height - (element.getPosition().getY() - currentBounds.bottomLeft().getY()));
         }
+    }
 
+    private void addConstraints(int width, int height) {
+        while(mapGridPane.getColumnConstraints().size() <= width){
+            mapGridPane.getColumnConstraints().add(new ColumnConstraints(CELL_WIDTH));
+        }
 
+        while(mapGridPane.getRowConstraints().size() <= height){
+            mapGridPane.getRowConstraints().add(new RowConstraints(CELL_HEIGHT));
+        }
+    }
 
+    private void createAxes(int width, int height, Boundary currentBounds) {
+        Label yx = new Label("y/x");
+        GridPane.setHalignment(yx, HPos.CENTER);
+        mapGridPane.add(yx, 0, 0);
+
+        createAxis(width, currentBounds.bottomLeft().getX(), 1, xAxisMask);
+        createAxis(height, currentBounds.topRight().getY(), -1, yAxisMask);
+    }
+
+    private void createAxis(int size, int start_value, int step, Vector2d axis_mask) {
+        int value = start_value;
+        for (int i = 1; i <= size; i++){
+            Label axis_value = new Label(String.valueOf(value));
+            GridPane.setHalignment(axis_value, HPos.CENTER);
+            mapGridPane.add(axis_value, i * axis_mask.getX(), i * axis_mask.getY());
+            value += step;
+        }
     }
 
     public void setMoveInformationLabel(String text) {

@@ -20,12 +20,12 @@ public class GrassField extends AbstractWorldMap {
     private void createGrassFields(int numberOfGrassFields){
         RandomPositionGenerator positionGenerator = new RandomPositionGenerator(
                 new Vector2d(
-                        -(int)Math.sqrt(numberOfGrassFields*4),
-                        -(int)Math.sqrt(numberOfGrassFields*4)
+                        -(int)Math.sqrt(numberOfGrassFields*3),
+                        -(int)Math.sqrt(numberOfGrassFields*3)
                 ),
                 new Vector2d(
-                        (int)Math.sqrt(numberOfGrassFields*4),
-                        (int)Math.sqrt(numberOfGrassFields*4)
+                        (int)Math.sqrt(numberOfGrassFields*3),
+                        (int)Math.sqrt(numberOfGrassFields*3)
                 ),
                 numberOfGrassFields);
 
