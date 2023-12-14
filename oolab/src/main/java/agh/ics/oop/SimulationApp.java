@@ -25,6 +25,9 @@ public class SimulationApp extends Application {
             presenter.loadPropertiesPane();
 
             primaryStage.setOnCloseRequest(event -> {
+                /*
+                we can't throw InterruptedException any further because of lambda, we have to handle it
+                 */
                 try {
                     presenter.onApplicationClose();
                 }
@@ -37,6 +40,7 @@ public class SimulationApp extends Application {
             primaryStage.show();
 
         } catch (IOException ex) {
+            /* Can't continue without necessary view, exiting */
             System.out.println("Could not load fxml file: " + ex.getMessage());
         }
     }

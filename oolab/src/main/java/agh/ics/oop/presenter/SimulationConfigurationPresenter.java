@@ -65,13 +65,15 @@ public class SimulationConfigurationPresenter {
 
             stagesList.add(stage);
             stage.show();
-        } catch (IOException ex) {
-            System.out.println("Could not load fxml file: " + ex.getMessage());
-            Platform.exit();
         } catch (IllegalArgumentException ex) {
             System.out.println("Passed illegal argument, please enter correct data: " + ex.getMessage());
             informationLabel.setText("Passed illegal argument, please enter correct data: " + ex.getMessage());
             informationLabel.setTextFill(Color.RED);
+        }
+        catch (IOException ex) {
+            /* Crash the application, can't continue without necessary view */
+            System.out.println("Could not load fxml file: " + ex.getMessage());
+            Platform.exit();
         }
     }
 
@@ -124,21 +126,15 @@ public class SimulationConfigurationPresenter {
 
             propertiesController = loader.getController();
         } catch(IOException ex){
+            /* Crash the application, can't continue without necessary view */
             System.out.println("Can't load fxmlFile" + ex.getMessage());
+            Platform.exit();
         }
     }
 
     @FXML
     private void onItemSelected() {
         loadPropertiesPane();
-    }
-
-    private void configureStage(Stage primaryStage, BorderPane viewRoot) {
-        var scene = new Scene(viewRoot);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Simulation");
-        primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
-        primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
     }
 
     @FXML
@@ -150,9 +146,10 @@ public class SimulationConfigurationPresenter {
             HBox root = loader.load();
             animalsList.getItems().add(root);
             animalsControllers.add(loader.getController());
-
-        } catch(IOException ex) {
+        } catch (IOException ex){
+            /* Crash the application, can't continue without necessary view */
             System.out.println("Can't load fxmlFile" + ex.getMessage());
+            Platform.exit();
         }
     }
 
@@ -164,5 +161,18 @@ public class SimulationConfigurationPresenter {
             animalsList.getItems().remove(lastIndex);
             animalsControllers.remove(lastIndex);
         }
+    }
+
+    /*
+        Not worth refactoring this duplicated code for the sake of readebility and keeping related things together,
+        I don't want to make any connection between app and presenter and i think that creating separate helper class
+        for this pice is not worth it
+    */
+    private void configureStage(Stage primaryStage, BorderPane viewRoot) {
+        var scene = new Scene(viewRoot);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Simulation");
+        primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
+        primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
     }
 }
