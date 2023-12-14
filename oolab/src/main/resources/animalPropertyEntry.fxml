@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="agh.ics.oop.presenter.AnimalPropertyEntryPresenter"
+            prefWidth="280.0">
+    <Label text="Animal:   " />
+    <Label text="X:   " />
+    <TextField fx:id="xPositionTextField" />
+    <Label text="Y:   " />
+    <TextField fx:id="yPositionTextField"/>
+</HBox>

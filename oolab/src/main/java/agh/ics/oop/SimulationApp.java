@@ -1,8 +1,6 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.*;
-import agh.ics.oop.model.util.ConsoleMapDisplay;
-import agh.ics.oop.presenter.SimulationPresenter;
+import agh.ics.oop.presenter.SimulationConfigurationPresenter;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -16,21 +14,25 @@ public class SimulationApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
+            FXMLLoader configurationLoader = new FXMLLoader();
+            configurationLoader.setLocation(getClass().getClassLoader().getResource("simulationConfiguration.fxml"));
 
-            BorderPane viewRoot = fxmlLoader.load();
+            BorderPane viewRoot = configurationLoader.load();
+
             configureStage(primaryStage, viewRoot);
-            SimulationPresenter presenter = fxmlLoader.getController();
+            SimulationConfigurationPresenter presenter = configurationLoader.getController();
 
-            AbstractWorldMap map = new GrassField(10);
-            presenter.setWorldMap(map);
-            ConsoleMapDisplay consoleMapDisplay = new ConsoleMapDisplay();
+            presenter.loadPropertiesPane();
 
-            map.addListener((worldMap, message) -> Platform.runLater(presenter::drawMap));
-            map.addListener((worldMap, message) -> Platform.runLater(() -> presenter.setMoveInformationLabel(message)));
-            map.addListener(consoleMapDisplay);
-            map.addListener((worldMap, message) -> Platform.runLater(primaryStage::sizeToScene));
+            primaryStage.setOnCloseRequest(event -> {
+                try {
+                    presenter.onApplicationClose();
+                }
+                catch(InterruptedException ex) {
+                    System.out.println("Interrupted exception while closing application");
+                }
+                Platform.exit();
+            });
 
             primaryStage.show();
 
@@ -41,8 +43,9 @@ public class SimulationApp extends Application {
 
     private void configureStage(Stage primaryStage, BorderPane viewRoot) {
         var scene = new Scene(viewRoot);
+
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Simulation app");
+        primaryStage.setTitle("Simulation Configuration");
         primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
         primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
     }

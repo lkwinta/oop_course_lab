@@ -41,8 +41,8 @@ public class World {
              * and still they can't all run at the same time, so queuing tasks into thread pool is faster when creating
              * multiple small tasks than creating bare threads
             */
-            engine.runAsyncInThreadPool();
-            engine.awaitSimulationsEnd();
+            engine.runAllAsyncInThreadPool();
+            engine.awaitAllSimulationsEnd();
 
             System.out.println("System stopped working! ");
         } catch (IllegalArgumentException ex){

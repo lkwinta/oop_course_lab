@@ -1,17 +1,13 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.OptionsParser;
 import agh.ics.oop.model.*;
 
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-
-import java.util.List;
 
 public class SimulationPresenter {
 
@@ -25,8 +21,6 @@ public class SimulationPresenter {
 
     @FXML
     private GridPane mapGridPane;
-    @FXML
-    private TextField argsInput;
     @FXML
     private Label moveInformation;
 
@@ -92,28 +86,4 @@ public class SimulationPresenter {
         mapGridPane.getRowConstraints().clear();
     }
 
-    private String[] getArgsInput() {
-        return argsInput.getText().split(" ");
-    }
-
-    @FXML
-    private void onSimulationStartClicked() {
-        List<Vector2d> positions = List.of(
-                new Vector2d(0,0),
-                new Vector2d(5,5)
-        );
-
-        try {
-            List<MoveDirection> moveDirections = OptionsParser.parse(getArgsInput());
-
-            Simulation simulation = new Simulation(positions, moveDirections, worldMap);
-
-            SimulationEngine simulationEngine = new SimulationEngine(List.of(simulation));
-            simulationEngine.runAsync();
-        }
-        catch (IllegalArgumentException ex) {
-            System.out.println("Passed illegal argument, please enter correct data: " + ex.getMessage());
-            moveInformation.setText("Passed illegal argument, please enter correct data: " + ex.getMessage());
-        }
-    }
 }
