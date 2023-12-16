@@ -19,4 +19,9 @@ public class Grass implements IWorldElement<Vector2d> {
     public String toString(){
         return "*";
     }
+
+    @Override
+    public String getResourceName() {
+        return "grass.png";
+    }
 }

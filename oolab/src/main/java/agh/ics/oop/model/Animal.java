@@ -84,4 +84,14 @@ public class Animal implements IWorldElement<Vector2d> {
             case NORTH -> "^";
         };
     }
+
+    @Override
+    public String getResourceName(){
+        return switch(orientation){
+            case EAST -> "right.png";
+            case SOUTH -> "down.png";
+            case WEST -> "left.png";
+            case NORTH -> "up.png";
+        };
+    }
 }

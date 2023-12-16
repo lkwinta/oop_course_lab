@@ -48,7 +48,7 @@ public class SimulationConfigurationPresenter {
     private void onSimulationStartClicked() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
+            fxmlLoader.setLocation(getClass().getClassLoader().getResource("views/simulation.fxml"));
 
             BorderPane viewRoot = fxmlLoader.load();
             Stage stage = new Stage();
@@ -120,9 +120,9 @@ public class SimulationConfigurationPresenter {
 
         try {
             if (mapSelector.getValue().equals("GrassField"))
-                loader.setLocation(getClass().getClassLoader().getResource("grassFieldProperties.fxml"));
+                loader.setLocation(getClass().getClassLoader().getResource("views/grassFieldProperties.fxml"));
             else
-                loader.setLocation(getClass().getClassLoader().getResource("rectangularMapProperties.fxml"));
+                loader.setLocation(getClass().getClassLoader().getResource("views/rectangularMapProperties.fxml"));
 
             VBox rootView = loader.load();
 
@@ -145,7 +145,7 @@ public class SimulationConfigurationPresenter {
     @FXML
     private void onAddAnimalClicked() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("animalPropertyEntry.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource("views/animalPropertyEntry.fxml"));
 
         try {
             HBox root = loader.load();

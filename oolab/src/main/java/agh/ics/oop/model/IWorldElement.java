@@ -7,4 +7,6 @@ public interface IWorldElement<T> {
 
     @Override
     String toString();
+
+    String getResourceName();
 }

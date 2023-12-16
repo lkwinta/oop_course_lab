@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 
 public class SimulationPresenter {
 
@@ -39,9 +40,9 @@ public class SimulationPresenter {
         createAxes(width, height, currentBounds);
 
         for(IWorldElement<Vector2d> element : worldMap.getElements()){
-            Label elementLabel = new Label(element.toString());
-            GridPane.setHalignment(elementLabel, HPos.CENTER);
-            mapGridPane.add(elementLabel,
+            VBox elementBox = WorldElementBoxFactory.getWorldElementBox(element);
+            GridPane.setHalignment(elementBox, HPos.CENTER);
+            mapGridPane.add(elementBox,
                     element.getPosition().getX() + 1 - currentBounds.bottomLeft().getX(),
                     height - (element.getPosition().getY() - currentBounds.bottomLeft().getY()));
         }

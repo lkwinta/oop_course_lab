@@ -9,7 +9,7 @@
     <top>
         <BorderPane>
             <top>
-                <HBox>
+                <HBox alignment="CENTER">
                     <VBox>
                         <Label fx:id="informationLabel" text="Please enter move directions" />
                         <TextField fx:id="argsInput" prefHeight="25.0" prefWidth="570.0" />
