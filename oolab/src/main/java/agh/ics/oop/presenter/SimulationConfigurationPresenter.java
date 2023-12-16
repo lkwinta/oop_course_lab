@@ -19,6 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,11 +93,11 @@ public class SimulationConfigurationPresenter {
         }
 
         presenter.setWorldMap(map);
-        ConsoleMapDisplay consoleMapDisplay = new ConsoleMapDisplay();
 
         map.addListener((worldMap, message) -> Platform.runLater(presenter::drawMap));
         map.addListener((worldMap, message) -> Platform.runLater(() -> presenter.setMoveInformationLabel(message)));
-        map.addListener(consoleMapDisplay);
+        map.addListener(((worldMap, message) ->
+                System.out.printf("%s %s\n", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")), message)));
         map.addListener((worldMap, message) -> Platform.runLater(stage::sizeToScene));
         return map;
     }

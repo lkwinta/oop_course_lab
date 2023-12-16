@@ -82,6 +82,10 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
     }
 
     @Override
+    public List<IWorldElement<Vector2d>> getOrderedElements() {
+        return null;
+    }
+    @Override
     public String toString() {
         Boundary currentBounds = getCurrentBounds();
         return mapVisualizer.draw(currentBounds.bottomLeft(), currentBounds.topRight());

@@ -50,6 +50,11 @@ public interface IWorldMap<T, P> extends IMoveValidator<P> {
     List<T> getElements();
 
     /**
+    * Return sorted world elements via position (first x, then y)
+    * */
+    List<T> getOrderedElements();
+
+    /**
      * Return current top right and bottom left corner of the map
      *
      * @return container for top right and bottom left vector

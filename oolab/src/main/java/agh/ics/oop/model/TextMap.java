@@ -74,6 +74,11 @@ public class TextMap implements IWorldMap<String, Integer> {
     }
 
     @Override
+    public List<String> getOrderedElements() {
+        return new ArrayList<>(texts.stream().map((a) -> a.first).toList());
+    }
+
+    @Override
     public Boundary getCurrentBounds() {
         return new Boundary(new Vector2d(0, 0), new Vector2d(texts.size(), 0));
     }
