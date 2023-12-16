@@ -2,7 +2,7 @@ package agh.ics.oop.presenter;
 
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.model.*;
-import agh.ics.oop.model.util.ConsoleMapDisplay;
+import agh.ics.oop.model.util.FileMapDisplay;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -93,12 +93,15 @@ public class SimulationConfigurationPresenter {
         }
 
         presenter.setWorldMap(map);
+        FileMapDisplay mapDisplay = new FileMapDisplay();
 
         map.addListener((worldMap, message) -> Platform.runLater(presenter::drawMap));
         map.addListener((worldMap, message) -> Platform.runLater(() -> presenter.setMoveInformationLabel(message)));
         map.addListener(((worldMap, message) ->
                 System.out.printf("%s %s\n", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")), message)));
         map.addListener((worldMap, message) -> Platform.runLater(stage::sizeToScene));
+        map.addListener(mapDisplay);
+
         return map;
     }
 
