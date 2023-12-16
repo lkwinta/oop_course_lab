@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -40,7 +41,7 @@ public interface IWorldMap<T, P> extends IMoveValidator<P> {
      * @param position The position of the object.
      * @return animal or null if the position is not occupied.
      */
-    T objectAt(P position);
+    Optional<T> objectAt(P position);
 
     /**
      * Return all objects on the map

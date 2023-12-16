@@ -3,6 +3,7 @@ package agh.ics.oop.model;
 import agh.ics.oop.model.util.MapVisualizer;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector2d>, Vector2d> {
     protected final MapVisualizer mapVisualizer;
@@ -68,12 +69,12 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
 
     @Override
     public boolean isOccupied(Vector2d position) {
-        return objectAt(position) != null;
+        return objectAt(position).isPresent();
     }
 
     @Override
-    public IWorldElement<Vector2d> objectAt(Vector2d position) {
-        return animalsMap.get(position);
+    public Optional<IWorldElement<Vector2d>> objectAt(Vector2d position) {
+        return Optional.ofNullable(animalsMap.get(position));
     }
 
     @Override
@@ -83,7 +84,15 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
 
     @Override
     public List<IWorldElement<Vector2d>> getOrderedElements() {
-        return null;
+        return animalsMap
+                .values()
+                .stream()
+                .sorted(
+                        Comparator.comparing(
+                                Animal::getPosition,
+                                Comparator.comparingInt(Vector2d::getX)
+                                        .thenComparingInt(Vector2d::getY)))
+                .collect(Collectors.toList());
     }
     @Override
     public String toString() {

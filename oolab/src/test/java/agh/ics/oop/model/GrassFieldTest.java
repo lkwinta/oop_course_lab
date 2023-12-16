@@ -46,14 +46,20 @@ class GrassFieldTest {
         }
 
         grassField.move(animal1, MoveDirection.FORWARD);
-        assertEquals(animal1, grassField.objectAt(new Vector2d(3, 4)));
-        assert(grassField.objectAt(new Vector2d(3, 3)) == null ||
-                grassField.objectAt(new Vector2d(3, 3)) instanceof Grass);
+
+        assertTrue(grassField.objectAt(new Vector2d(3,4)).isPresent());
+        assertEquals(animal1, grassField.objectAt(new Vector2d(3,4)).get());
+        assert(grassField.objectAt(new Vector2d(3, 3)).isEmpty() ||
+                grassField.objectAt(new Vector2d(3, 3)).get() instanceof Grass);
 
         grassField.move(animal2, MoveDirection.FORWARD);
         grassField.move(animal2, MoveDirection.FORWARD);
-        assertEquals(animal2, grassField.objectAt(new Vector2d(3, 3)));
-        assertEquals(animal1, grassField.objectAt(new Vector2d(3, 4)));
+
+        assertTrue(grassField.objectAt(new Vector2d(3,3)).isPresent());
+        assertEquals(animal2, grassField.objectAt(new Vector2d(3, 3)).get());
+
+        assertTrue(grassField.objectAt(new Vector2d(3,4)).isPresent());
+        assertEquals(animal1, grassField.objectAt(new Vector2d(3, 4)).get());
     }
 
     @Test
@@ -67,7 +73,9 @@ class GrassFieldTest {
         }
 
         assert(!grassField.isOccupied(new Vector2d(1, 2)) ||
-                grassField.objectAt(new Vector2d(1, 2)) instanceof Grass);
+                        grassField.objectAt(new Vector2d(1, 2)).isPresent() &&
+                        grassField.objectAt(new Vector2d(1, 2)).get() instanceof Grass);
+
         assertTrue(grassField.isOccupied(new Vector2d(2, 2)));
     }
 
@@ -82,9 +90,11 @@ class GrassFieldTest {
             fail(ex.getMessage());
         }
 
-        assert(grassField.objectAt(new Vector2d(1, 2)) == null ||
-                grassField.objectAt(new Vector2d(1, 2)) instanceof Grass);
-        assertEquals(animal, grassField.objectAt(new Vector2d(2, 2)));
+        assert(grassField.objectAt(new Vector2d(1, 2)).isEmpty() ||
+                grassField.objectAt(new Vector2d(1, 2)).get() instanceof Grass);
+
+        assertTrue(grassField.objectAt(new Vector2d(2,2)).isPresent());
+        assertEquals(animal, grassField.objectAt(new Vector2d(2, 2)).get());
 
         int grassCount = 0;
         for (IWorldElement<Vector2d> element : grassField.getElements()){

@@ -35,9 +35,12 @@ class TextMapTest {
         assertDoesNotThrow(() -> map.place(str2));
         assertDoesNotThrow(() -> map.place(str3));
 
-        assertEquals(str1, map.objectAt(0));
-        assertEquals(str2, map.objectAt(1));
-        assertEquals(str3, map.objectAt(2));
+        assertTrue(map.objectAt(0).isPresent());
+        assertEquals(str1, map.objectAt(0).get());
+        assertTrue(map.objectAt(1).isPresent());
+        assertEquals(str2, map.objectAt(1).get());
+        assertTrue(map.objectAt(2).isPresent());
+        assertEquals(str3, map.objectAt(2).get());
     }
 
     @Test
@@ -57,32 +60,42 @@ class TextMapTest {
         }
 
         map.move(str2, MoveDirection.FORWARD);
-        assertEquals(str2, map.objectAt(1));
+        assertTrue(map.objectAt(1).isPresent());
+        assertEquals(str2, map.objectAt(1).get());
 
         map.move(str2, MoveDirection.RIGHT);
         map.move(str2, MoveDirection.FORWARD);
 
-        assertEquals(str3, map.objectAt(1));
-        assertEquals(str2, map.objectAt(2));
+        assertTrue(map.objectAt(1).isPresent());
+        assertEquals(str3, map.objectAt(1).get());
+        assertTrue(map.objectAt(2).isPresent());
+        assertEquals(str2, map.objectAt(2).get());
 
         map.move(str2, MoveDirection.FORWARD);
-        assertEquals(str2, map.objectAt(2));
+        assertTrue(map.objectAt(2).isPresent());
+        assertEquals(str2, map.objectAt(2).get());
 
         map.move(str2, MoveDirection.BACKWARD);
-        assertEquals(str2, map.objectAt(1));
-        assertEquals(str3, map.objectAt(2));
+        assertTrue(map.objectAt(1).isPresent());
+        assertEquals(str2, map.objectAt(1).get());
+        assertTrue(map.objectAt(2).isPresent());
+        assertEquals(str3, map.objectAt(2).get());
 
         map.move(str2, MoveDirection.LEFT);
         map.move(str2, MoveDirection.LEFT);
         map.move(str2, MoveDirection.FORWARD);
 
-        assertEquals(str2, map.objectAt(0));
-        assertEquals(str1, map.objectAt(1));
+        assertTrue(map.objectAt(0).isPresent());
+        assertEquals(str2, map.objectAt(0).get());
+        assertTrue(map.objectAt(1).isPresent());
+        assertEquals(str1, map.objectAt(1).get());
 
         map.move(str2, MoveDirection.BACKWARD);
 
-        assertEquals(str1, map.objectAt(0));
-        assertEquals(str2, map.objectAt(1));
+        assertTrue(map.objectAt(0).isPresent());
+        assertEquals(str1, map.objectAt(0).get());
+        assertTrue(map.objectAt(1).isPresent());
+        assertEquals(str2, map.objectAt(1).get());
     }
 
     @Test
@@ -114,7 +127,8 @@ class TextMapTest {
             fail(ex.getMessage());
         }
 
-        assertEquals(str1, map.objectAt(0));
-        assertNull(map.objectAt(1));
+        assertTrue(map.objectAt(0).isPresent());
+        assertEquals(str1, map.objectAt(0).get());
+        assertTrue(map.objectAt(1).isEmpty());
     }
 }

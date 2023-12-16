@@ -2,10 +2,7 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.util.RandomPositionGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 import java.lang.Math;
 import java.util.stream.Stream;
 
@@ -45,15 +42,16 @@ public class GrassField extends AbstractWorldMap {
     }
 
     @Override
-    public IWorldElement<Vector2d> objectAt(Vector2d position) {
+    public Optional<IWorldElement<Vector2d>> objectAt(Vector2d position) {
         if (animalsMap.get(position) != null)
             return super.objectAt(position);
 
-        return grassMap.get(position);
+        return Optional.ofNullable(grassMap.get(position));
     }
 
     @Override
     public List<IWorldElement<Vector2d>> getElements() {
+        /*Stream already used here*/
         return new ArrayList<>(
                 Stream.concat(
                         grassMap.values().stream(),
