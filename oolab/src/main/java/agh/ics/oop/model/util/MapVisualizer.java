@@ -4,8 +4,6 @@ import agh.ics.oop.model.IWorldElement;
 import agh.ics.oop.model.IWorldMap;
 import agh.ics.oop.model.Vector2d;
 
-import java.util.Optional;
-
 /**
  * The map visualizer converts the {@link IWorldMap} map into a string
  * representation.
@@ -77,12 +75,9 @@ public class MapVisualizer {
     }
 
     private String drawObject(Vector2d currentPosition) {
-        if (this.map.isOccupied(currentPosition)) {
-            Optional<IWorldElement<Vector2d>> object = this.map.objectAt(currentPosition);
-            if (object.isPresent()) {
-                return object.get().toString();
-            }
-        }
-        return EMPTY_CELL;
+        return this.map
+                .objectAt(currentPosition)
+                .map(IWorldElement::toString)
+                .orElse(EMPTY_CELL);
     }
 }
