@@ -60,7 +60,7 @@ public abstract class AbstractWorldMap implements IWorldMap<IWorldElement<Vector
             animalsMap.put(animal.getPosition(), animal);
             mapChanged("Animal at %s moved to: %s ".formatted(oldPosition,animal.getPosition()));
         }
-        else if(animal.getOrientation().equals(oldOrientation))
+        else if(!animal.getOrientation().equals(oldOrientation))
             mapChanged("Animal at: %s changed orientation to: %s".formatted(oldPosition, animal.getOrientation()));
         else
             mapChanged("Cannot move animal at: %s with direction: %s".formatted(animal.getPosition(), direction));
