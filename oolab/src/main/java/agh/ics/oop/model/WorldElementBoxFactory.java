@@ -6,9 +6,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+import java.util.HashMap;
+
 public class WorldElementBoxFactory {
+    private static final HashMap<String, Image> imagesHashMap = new HashMap<>();
+
     public static VBox getWorldElementBox(IWorldElement<Vector2d> worldElement){
-        ImageView imageView = new ImageView(new Image("textures/" + worldElement.getResourceName()));
+        String url = "textures/" + worldElement.getResourceName();
+        if(!imagesHashMap.containsKey(url)){
+            imagesHashMap.put(url, new Image(url));
+        }
+
+        ImageView imageView = new ImageView(imagesHashMap.get(url));
         imageView.setFitHeight(20);
         imageView.setFitWidth(20);
 
