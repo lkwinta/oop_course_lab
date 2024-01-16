@@ -15,7 +15,7 @@ public class SimulationApp extends Application {
     public void start(Stage primaryStage) {
         try {
             FXMLLoader configurationLoader = new FXMLLoader();
-            configurationLoader.setLocation(getClass().getClassLoader().getResource("simulationConfiguration.fxml"));
+            configurationLoader.setLocation(getClass().getClassLoader().getResource("views/simulationConfiguration.fxml"));
 
             BorderPane viewRoot = configurationLoader.load();
 

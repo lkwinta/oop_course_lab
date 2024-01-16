@@ -2,7 +2,7 @@ package agh.ics.oop.presenter;
 
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.model.*;
-import agh.ics.oop.model.util.ConsoleMapDisplay;
+import agh.ics.oop.model.util.FileMapDisplay;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class SimulationConfigurationPresenter {
     private void onSimulationStartClicked() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
+            fxmlLoader.setLocation(getClass().getClassLoader().getResource("views/simulation.fxml"));
 
             BorderPane viewRoot = fxmlLoader.load();
             Stage stage = new Stage();
@@ -91,12 +93,15 @@ public class SimulationConfigurationPresenter {
         }
 
         presenter.setWorldMap(map);
-        ConsoleMapDisplay consoleMapDisplay = new ConsoleMapDisplay();
+        FileMapDisplay mapDisplay = new FileMapDisplay();
 
         map.addListener((worldMap, message) -> Platform.runLater(presenter::drawMap));
         map.addListener((worldMap, message) -> Platform.runLater(() -> presenter.setMoveInformationLabel(message)));
-        map.addListener(consoleMapDisplay);
+        map.addListener(((worldMap, message) ->
+                System.out.printf("%s %s\n", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")), message)));
         map.addListener((worldMap, message) -> Platform.runLater(stage::sizeToScene));
+        map.addListener(mapDisplay);
+
         return map;
     }
 
@@ -115,9 +120,9 @@ public class SimulationConfigurationPresenter {
 
         try {
             if (mapSelector.getValue().equals("GrassField"))
-                loader.setLocation(getClass().getClassLoader().getResource("grassFieldProperties.fxml"));
+                loader.setLocation(getClass().getClassLoader().getResource("views/grassFieldProperties.fxml"));
             else
-                loader.setLocation(getClass().getClassLoader().getResource("rectangularMapProperties.fxml"));
+                loader.setLocation(getClass().getClassLoader().getResource("views/rectangularMapProperties.fxml"));
 
             VBox rootView = loader.load();
 
@@ -140,7 +145,7 @@ public class SimulationConfigurationPresenter {
     @FXML
     private void onAddAnimalClicked() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("animalPropertyEntry.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource("views/animalPropertyEntry.fxml"));
 
         try {
             HBox root = loader.load();

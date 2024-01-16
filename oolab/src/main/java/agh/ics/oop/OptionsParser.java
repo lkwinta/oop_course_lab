@@ -18,6 +18,7 @@ public class OptionsParser {
      * @return MoveDirection[] array of move directions in enum format
      */
     public static List<MoveDirection> parse(String[] args){
+        /*Stream already used here*/
         return stream(args)
                 .map(OptionsParser::mapArgToDirection)
                 .filter(Objects::nonNull)

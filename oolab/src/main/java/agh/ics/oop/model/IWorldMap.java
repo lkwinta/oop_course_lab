@@ -1,6 +1,7 @@
 package agh.ics.oop.model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -40,7 +41,7 @@ public interface IWorldMap<T, P> extends IMoveValidator<P> {
      * @param position The position of the object.
      * @return animal or null if the position is not occupied.
      */
-    T objectAt(P position);
+    Optional<T> objectAt(P position);
 
     /**
      * Return all objects on the map
@@ -48,6 +49,11 @@ public interface IWorldMap<T, P> extends IMoveValidator<P> {
      * @return copy of the list containing all elements on the map
      */
     List<T> getElements();
+
+    /**
+    * Return sorted world elements via position (first x, then y)
+    * */
+    List<T> getOrderedElements();
 
     /**
      * Return current top right and bottom left corner of the map

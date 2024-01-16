@@ -52,16 +52,21 @@ class RectangularMapTest {
         }
 
         rectMap.move(animal2, MoveDirection.FORWARD);
-        assertEquals(animal, rectMap.objectAt(new Vector2d(3, 3)));
-        assertEquals(animal2, rectMap.objectAt(new Vector2d(3, 2)));
+        assertTrue(rectMap.objectAt(new Vector2d(3,3)).isPresent());
+        assertEquals(animal, rectMap.objectAt(new Vector2d(3, 3)).get());
+        assertTrue(rectMap.objectAt(new Vector2d(3,2)).isPresent());
+        assertEquals(animal2, rectMap.objectAt(new Vector2d(3, 2)).get());
 
         rectMap.move(animal, MoveDirection.FORWARD);
-        assertEquals(animal, rectMap.objectAt(new Vector2d(3, 4)));
-        assertNull(rectMap.objectAt(new Vector2d(3, 3)));
+
+        assertTrue(rectMap.objectAt(new Vector2d(3,4)).isPresent());
+        assertEquals(animal, rectMap.objectAt(new Vector2d(3, 4)).get());
+        assertTrue(rectMap.objectAt(new Vector2d(3,3)).isEmpty());
 
         rectMap.move(animal, MoveDirection.FORWARD);
-        assertEquals(animal, rectMap.objectAt(new Vector2d(3, 4)));
-        assertNull(rectMap.objectAt(new Vector2d(3, 5)));
+        assertTrue(rectMap.objectAt(new Vector2d(3,4)).isPresent());
+        assertEquals(animal, rectMap.objectAt(new Vector2d(3, 4)).get());
+        assertTrue(rectMap.objectAt(new Vector2d(3,5)).isEmpty());
     }
 
     @Test
@@ -90,10 +95,11 @@ class RectangularMapTest {
             fail(ex.getMessage());
         }
 
-        assertNull(rectMap.objectAt(new Vector2d(5,5)));
+        assertTrue(rectMap.objectAt(new Vector2d(5,5)).isEmpty());
 
         /* Animal doesn't have overloaded equals operator, so using default reference comparison*/
-        assertEquals(animal2, rectMap.objectAt(new Vector2d(3, 3)));
+        assertTrue(rectMap.objectAt(new Vector2d(3,3)).isPresent());
+        assertEquals(animal2, rectMap.objectAt(new Vector2d(3, 3)).get());
     }
 
     @Test

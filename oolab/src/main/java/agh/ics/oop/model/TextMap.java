@@ -61,16 +61,21 @@ public class TextMap implements IWorldMap<String, Integer> {
     }
 
     @Override
-    public String objectAt(Integer position) {
+    public Optional<String> objectAt(Integer position) {
         if(!isOccupied(position))
-            return null;
+            return Optional.empty();
 
-        return texts.get(position).first;
+        return Optional.of(texts.get(position).first);
     }
 
     @Override
     public List<String> getElements() {
         return new ArrayList<>(textsPositions.keySet());
+    }
+
+    @Override
+    public List<String> getOrderedElements() {
+        return new ArrayList<>(texts.stream().map((a) -> a.first).toList());
     }
 
     @Override
